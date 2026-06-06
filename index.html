@@ -75,13 +75,16 @@
       overflow: hidden;
       z-index: 0;
     }
-    #hero-bg video {
+    #hero-bg iframe {
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      min-width: 100%; min-height: 100%;
-      width: auto; height: auto;
-      object-fit: cover;
+      width: 177.78vh;
+      height: 56.25vw;
+      min-width: 100%;
+      min-height: 100%;
+      border: none;
+      pointer-events: none;
     }
 
     /* ── HERO SECTION (sticky scroll mechanics) ── */
@@ -251,9 +254,11 @@
 
 <!-- ── HERO BACKGROUND ── -->
 <div id="hero-bg">
-  <video autoplay muted loop playsinline>
-    <source src="videos/roundtables-reel.mov">
-  </video>
+  <iframe
+    src="https://www.youtube.com/embed/m03xZ3UtXgQ?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=m03xZ3UtXgQ&modestbranding=1&showinfo=0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen>
+  </iframe>
 </div>
 
 <!-- ── HERO ── -->
