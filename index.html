@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllSides Roundtables — American Dream</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false },
+      theme: {
+        extend: {
+          colors: { 'as-dark': '#353C40' }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    img { border: none; display: block; }
+
+    :root {
+      --as-dark: #353C40;
+      --gray-50: #FAFAFA;
+      --gray-400: #d4d4d4;
+      --gray-500: #737373;
+    }
+
+    body {
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--as-dark);
+    }
+
+    /* ── FROSTED GLASS ── */
+    .frosted {
+      background: rgba(250, 250, 250, 0.80);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 32px;
+      padding: 64px;
+      overflow: hidden;
+    }
+    .frosted.outlined {
+      outline: 1px solid var(--gray-400);
+      outline-offset: -1px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 32px;
+      background: var(--as-dark);
+      color: var(--gray-50);
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .btn-dark.lg { font-size: 1.5rem; padding: 28px 56px; }
+    .btn-short { display: none; }
+
+    /* ── HERO BACKGROUND (swap video src when needed) ── */
+    #hero-bg {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 0;
+    }
+    #hero-bg video {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      min-width: 100%; min-height: 100%;
+      width: auto; height: auto;
+      object-fit: cover;
+    }
+
+    /* ── HERO SECTION (sticky scroll mechanics) ── */
+    .hero-section {
+      height: 100vh;
+      margin-top: -100vh;
+      padding: 32px 0 80px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-section .container { flex: 1; display: flex; flex-direction: column; }
+
+    /* ── NAV (frosted glass) ── */
+    nav {
+      padding: 8px;
+      background: rgba(250, 250, 250, 0.80);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 4px 8px;
+      font-size: 1.75rem;
+    }
+    .nav-wordmark { color: var(--as-dark); font-weight: 300; }
+
+    /* ── HERO HEADLINE ── */
+    .hero-headline { flex: 1; display: flex; align-items: flex-end; padding-top: 32px; }
+    .hero-headline .frosted { max-width: 800px; display: flex; flex-direction: column; gap: 49px; }
+
+    /* ── TYPOGRAPHY ── */
+    h1 { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 500; line-height: 1.15; }
+    h1 em { font-style: italic; }
+    h2 { font-size: clamp(1.25rem, 2.8vw, 2rem); font-weight: 500; line-height: 1.2; }
+    h3 { font-size: clamp(1rem, 2vw, 1.5rem); font-weight: 500; }
+
+    .landing .body,
+    .hero-section .body,
+    .register-section .body { font-size: 1.5rem; font-weight: 400; line-height: 1.5; }
+
+    .overline {
+      color: var(--gray-500);
+      font-size: 1.25rem;
+      font-weight: 400;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 1;
+    }
+
+    /* ── MAIN (bg covers sticky hero) ── */
+    main.landing {
+      background: #fafafa;
+      position: relative;
+      z-index: 1;
+      border-right: 1px solid #d4d4d4;
+      border-left: 1px solid #d4d4d4;
+    }
+
+    /* ── FOOTER ── */
+    footer { background: url('https://placehold.co/1980x406/e0ddd8/e0ddd8') center / cover no-repeat; position: relative; z-index: 1; }
+
+    .footer-links a {
+      color: #757575;
+      font-size: 0.875rem;
+      line-height: 19.6px;
+      text-decoration: none;
+      padding: 0 5.6px;
+      border-right: 1px solid #d4d4d4;
+    }
+    .footer-links a:last-child { border-right: none; }
+    .footer-links a:hover { color: var(--as-dark); }
+
+    .app-badge {
+      width: 180px; height: 52px;
+      background: var(--as-dark);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: white;
+      font-size: 0.75rem;
+      letter-spacing: 0.3px;
+    }
+
+    .copyright { color: var(--as-dark); font-size: 0.875rem; line-height: 19.6px; padding-top: 24px; }
+
+    .cookie-btn {
+      display: inline-flex;
+      padding: 8px 22px;
+      border: 1px solid #68B631;
+      color: #68B631;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      font-family: Helvetica, sans-serif;
+      letter-spacing: 0.2px;
+      background: none;
+      cursor: pointer;
+    }
+
+    /* ── FAQ ANSWER BORDER ── */
+    .faq-a {
+      padding-left: 2rem;
+      border-left: 5px solid #d4d4d4;
+    }
+
+    /* ── EVENT IMAGE ── */
+    .event-img-wrap {
+      width: 44%;
+      flex-shrink: 0;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .event-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .frosted { padding: 40px; }
+      .btn-dark.lg { font-size: 1.125rem; padding: 20px 40px; }
+      .landing .body,
+      .hero-section .body,
+      .register-section .body { font-size: 1.25rem; }
+
+      .event-cols { flex-direction: column !important; }
+      .event-img-wrap { width: 100%; height: 320px; border-radius: 16px; }
+      .three-col { grid-template-columns: 1fr !important; }
+      .why-cols { flex-direction: column !important; }
+      .why-img-wrap { min-height: 280px; }
+    }
+
+    @media (max-width: 600px) {
+      .btn-full { display: none; }
+      .btn-short { display: inline; }
+      .container { padding: 0 16px; }
+      .frosted { padding: 24px; }
+      main.landing { padding: 48px 16px; gap: 48px; }
+      .register-section { padding: 48px 16px; }
+      h2 { font-size: 1.5rem; }
+      h3 { font-size: 1.25rem; }
+      .landing .body,
+      .hero-section .body,
+      .register-section .body { font-size: 1.25rem; }
+
+      .nav-brand { font-size: 1.125rem; }
+      .btn-dark { font-size: 0.875rem; padding: 12px 20px; }
+      .btn-dark.lg { font-size: 1rem; padding: 16px 32px; }
+
+      .footer-row { flex-direction: column; align-items: flex-start; }
+      .app-badges { flex-direction: column; }
+    }
+  </style>
+</head>
+<body class="bg-[#fafafa]">
+
+<!-- ── STICKY ZONE ── -->
+<div id="sticky-zone">
+
+<!-- ── HERO BACKGROUND ── -->
+<div id="hero-bg">
+  <video autoplay muted loop playsinline>
+    <source src="videos/roundtables-reel.mov">
+  </video>
+</div>
+
+<!-- ── HERO ── -->
+<section class="hero-section">
+  <div class="container max-w-[1440px] mx-auto px-8 w-full">
+
+    <nav>
+      <div class="nav-brand">
+        <svg role="img" aria-label="AllSides" style="height:1em;width:auto;display:block;" viewBox="0 0 449 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#lc)">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M146.533 89.0381L142.254 74.7301H114.603L110.329 89.0381H95.5149L120.453 15.8311H136.098L161.24 89.0381H146.533ZM128.479 29.0001L118.26 62.6961H138.602L128.479 29.0001Z" fill="#353C40"/>
+            <path d="M164.581 89.0378V15.8318H177.31V89.0388L164.581 89.0378ZM186.178 89.0378V15.8318H198.907V89.0388L186.178 89.0378ZM259.737 83.3358C250.868 90.8018 238.976 90.9028 235.635 90.9028C231.249 90.9028 217.169 90.6958 206.944 80.0158C205.689 78.6678 204.333 76.9038 203.395 75.2458L214.976 67.2628C218.209 72.0328 224.257 78.2518 237.823 78.2518C238.45 78.2518 241.056 78.2518 243.244 77.7348C244.815 77.4248 252.01 75.4588 252.01 68.6108C252.01 67.8868 251.909 65.9148 250.659 64.2568C248.15 60.9368 241.48 59.9988 237.823 59.1728L229.067 57.2018C225.303 56.3758 221.239 55.5438 217.898 53.7798C214.456 52.0158 207.357 47.3478 207.357 36.7748C207.357 35.1168 207.566 30.3478 210.183 25.9878C213.512 20.3928 221.544 13.9658 236.472 13.9658C243.04 13.9658 255.978 14.9998 266.203 28.7918L254.831 37.1848C252.536 33.5608 247.319 26.3028 235.737 26.3028C235.008 26.3028 225.721 26.1958 222.697 31.8988C222.07 33.0438 221.866 34.0788 221.866 35.2188C221.866 36.4598 222.177 37.5048 222.799 38.5388C224.574 41.5438 228.643 42.4768 235.426 43.9318L243.04 45.5888C250.032 47.1448 257.758 49.2188 262.654 54.9208C264.745 57.2008 266.932 60.5158 266.932 67.2628C266.932 73.8978 264.847 78.9818 259.737 83.3358ZM272.882 29.0998V15.8268H285.295V29.0998H272.882ZM272.882 89.0378V37.1848H285.295V89.0378H272.882Z" fill="#353C40"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M329.121 89.0381V84.0561C328.596 84.5781 328.183 85.2011 327.663 85.7181C325.679 87.5881 321.395 90.5951 314.617 90.5951C312.848 90.5951 309.084 90.3871 304.912 88.4151C299.277 85.8251 291.454 79.0781 291.454 64.1511C291.454 48.2861 300.113 40.0951 306.06 37.3991C307.727 36.6741 310.757 35.6351 315.137 35.6351C316.912 35.6351 320.671 35.7351 324.633 37.9151C325.362 38.3311 325.99 38.6451 327.239 39.5781C328.183 40.3031 328.912 41.2361 329.121 41.4431V15.8311H341.534V89.0381H329.121ZM326.719 52.6401C326.092 51.5001 324.944 50.1511 324.006 49.4271C321.926 47.7691 319.62 47.1461 317.014 47.1461C315.974 47.1461 313.261 47.3481 310.655 49.0111C304.703 52.8481 304.494 61.2471 304.494 62.8031C304.494 70.4771 307.727 79.2911 316.912 79.2911C320.253 79.2911 322.858 78.2521 325.046 75.7691C328.279 72.2411 329.121 67.9891 329.014 63.3191C329.014 59.9991 328.494 55.7521 326.719 52.6401ZM395.06 82.8131C392.138 85.5101 385.146 90.5941 374.396 90.5941C371.061 90.5941 362.814 90.1781 355.726 83.6501C349.779 78.0441 347.586 70.8871 347.586 62.8021C347.586 58.4481 348.214 54.3021 349.881 50.3591C352.176 45.1731 358.648 35.6341 373.774 35.6341C385.457 35.6341 391.618 41.6451 394.331 45.5891C396.722 49.2191 399.125 55.5441 399.436 65.6051H360.836C361.045 67.1561 361.565 70.3701 364.181 73.4871C365.945 75.6621 369.082 78.4601 375.548 78.4601C382.02 78.4601 385.774 75.4601 387.441 73.6851C387.859 73.2791 388.487 72.4481 389.216 71.3081L399.859 77.4261C399.023 78.5611 397.564 80.5321 395.06 82.8131ZM384.626 52.2231C383.473 49.7351 380.76 45.5891 373.983 45.5891C371.27 45.5891 369.806 46.1061 368.766 46.5221C362.927 48.9091 361.565 54.7121 361.254 56.4771H385.666C385.463 54.8191 385.114 53.4011 384.626 52.2231Z" fill="#353C40"/>
+            <path d="M447.225 79.9138C444.721 84.6838 438.255 90.5938 425.52 90.5938C415.719 90.5938 408.727 87.2738 405.494 85.3018C403.719 84.1668 402.051 82.8128 400.48 81.2568L409.869 73.6838C410.287 74.2118 410.915 75.1388 412.271 76.2848C416.759 80.1168 423.44 80.3248 424.898 80.3248C428.024 80.3248 431.681 79.5998 433.761 77.2178C434.603 76.3858 435.118 75.2458 435.118 74.2118C435.118 73.7918 435.016 72.9698 434.287 72.0318C432.93 70.1618 431.263 70.0608 427.402 69.2288C423.96 68.5038 420.512 68.0888 417.183 67.2628C414.882 66.6388 402.781 63.7348 402.781 52.5378C402.781 48.5948 404.448 45.6958 405.177 44.5498C407.789 40.5098 413.944 35.6338 425.209 35.6338C429.274 35.6338 439.82 36.2568 447.643 45.2798L438.775 53.4698C437.729 51.2908 436.378 50.0438 435.542 49.3198C432.303 46.5218 428.866 45.5888 424.587 45.5888C424.067 45.5888 420.512 45.5888 418.223 47.1448C416.341 48.3918 415.928 50.0448 415.928 50.9768C416.024 52.7408 417.279 53.9868 417.595 54.1958C418.952 55.2348 422.4 56.0608 426.566 56.7858C429.386 57.3078 432.201 57.7178 435.016 58.3418C437.836 58.9648 440.962 59.8978 443.268 61.5608C445.139 62.9088 449 66.5328 449 72.8588C449 75.3528 448.373 77.7348 447.225 79.9138Z" fill="#353C40"/>
+            <path d="M40.2389 42.4981L18.1319 17.6801C15.5259 14.7601 12.3729 15.3781 11.1239 19.0601L0.51289 50.3161C-0.73711 53.9931 0.378891 59.4021 2.97889 62.3281L8.05689 68.0301L18.6469 96.8081C19.4189 98.9021 20.2339 98.7961 20.4639 96.5891L21.8369 83.4951L25.0809 87.1451C27.6909 90.0661 30.8449 89.4431 32.0889 85.7651L42.6939 54.5101C43.9489 50.8281 42.8449 45.4181 40.2389 42.4981Z" fill="#DD2A19"/>
+            <path d="M90.2886 41.6447L57.7906 48.3277C53.9676 49.1107 49.8066 52.7717 48.5576 56.4547L37.9516 87.7047C36.6966 91.3927 38.8146 93.7587 42.6376 92.9747L54.8036 90.4647L73.2806 103.208C74.3476 103.943 75.1736 103.49 75.1146 102.201L74.3696 86.4467L75.1356 86.2927C78.9646 85.4987 83.1196 81.8477 84.3746 78.1597L94.9806 46.9147C96.2296 43.2277 94.1226 40.8557 90.2886 41.6447Z" fill="#2062A6"/>
+            <path d="M91.2834 28.8871L86.4044 23.4141L88.0884 5.9181C88.2164 4.6281 87.3374 3.9891 86.1414 4.5011L74.0934 9.5951L69.1764 4.0751C66.5664 1.1481 61.3004 -0.599902 57.4714 0.188098L24.9734 6.8671C21.1504 7.6561 20.1434 10.6871 22.7534 13.6191L44.8554 38.4321C47.4554 41.3521 52.7324 43.1051 56.5554 42.3171L89.0474 35.6341C92.8814 34.8501 93.8784 31.8131 91.2834 28.8871Z" fill="#8C63A6"/>
+          </g>
+          <defs><clipPath id="lc"><rect width="449" height="104" fill="white"/></clipPath></defs>
+        </svg>
+        <span class="nav-wordmark">Roundtables</span>
+      </div>
+      <a href="https://roundtables.allsides.com" class="btn-dark">
+        <span class="btn-full">Join the Conversation</span>
+        <span class="btn-short">Join Us</span>
+      </a>
+    </nav>
+
+    <div class="hero-headline">
+      <div class="frosted">
+        <h1>How are you pursuing <em>your</em> American Dream?</h1>
+        <p class="body">Maybe it's buying a home. Maybe it's starting a business. Maybe it's helping your children have more opportunities than you did.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── JOIN US ── -->
+<section id="register" class="register-section relative z-[1] max-w-[1440px] mx-auto px-8 py-20 w-full">
+  <div class="frosted outlined">
+    <div class="event-cols flex gap-[49px] items-stretch">
+      <div class="event-img-wrap">
+        <img src="images/why-photo.jpg" alt="Roundtable event" />
+      </div>
+      <div class="flex-1 pt-4 flex flex-col gap-8">
+        <h2>Join us on July 20, 2026</h2>
+        <p class="body">We'll be hosting a candid discussion about how Americans are thinking about opportunity, security, success, and the future they hope to build.<br><br>In small groups, you'll talk directly with people from different backgrounds and walks of life, hearing how they are pursuing their goals, navigating challenges, and making important decisions about work, family, money, and life.</p>
+        <a href="https://roundtables.allsides.com" class="btn-dark lg">Register Now</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /sticky-zone -->
+
+<!-- ── PAGE SECTIONS ── -->
+<main class="landing max-w-screen-lg mx-auto px-8 py-20 flex flex-col gap-20">
+
+  <!-- What You'll Do -->
+  <section class="py-16">
+    <h2 class="text-center mb-8">What You'll Do</h2>
+    <div class="three-col grid grid-cols-3 gap-8">
+      <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
+        <img src="images/activity-share.jpg" alt="Share" class="w-full aspect-square rounded-lg object-cover" />
+        <h3>Share</h3>
+        <p class="body">You'll have the chance to share your own experiences about building your dream</p>
+      </div>
+      <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
+        <img src="images/activity-listen.jpg" alt="Listen" class="w-full aspect-square rounded-lg object-cover" />
+        <h3>Listen</h3>
+        <p class="body">Hear how others are navigating similar questions about work, family, money, and what success really looks like</p>
+      </div>
+      <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
+        <img src="images/activity-connect.jpg" alt="Connect" class="w-full aspect-square rounded-lg object-cover" />
+        <h3>Connect</h3>
+        <p class="body">You might discover that someone else's path gives you a new perspective on your own</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why It Matters -->
+  <section>
+    <div class="why-cols flex gap-[49px] items-stretch">
+      <div class="why-img-wrap flex-1 min-w-0 rounded-2xl overflow-hidden">
+        <img src="images/event-photo.jpg" alt="Why it matters" class="w-full h-full object-cover" />
+      </div>
+      <div class="flex-1 min-w-0 flex flex-col gap-8">
+        <h2>Why it matters</h2>
+        <p class="body">Most of us have a vision for the future we want. But the choices we make every day don't always move us toward that vision in the ways we expect. Sometimes they lead us somewhere even better. Other times, they help us discover what truly matters.<br><br>Insights from these conversations will be anonymized and shared as part of a national report so that others across the country can see how people like them are thinking about the future.<br><br><strong>Be part of the conversation.</strong></p>
+        <a href="https://roundtables.allsides.com" class="btn-dark lg">Reserve your spot today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sponsors -->
+  <section class="py-16 flex flex-col items-center gap-8">
+    <h2 class="text-center">Our Sponsors</h2>
+    <img src="images/sponsors.jpg" alt="Sponsors" class="w-full" />
+  </section>
+
+  <!-- FAQ -->
+  <section>
+    <div class="frosted outlined flex flex-col gap-[49px]" style="background: white;">
+      <img src="images/faq-banner.jpg" alt="AllSides Roundtable in progress" class="w-full rounded-2xl object-cover max-h-[512px]" />
+      <div class="pt-4 flex flex-col gap-12">
+        <h2>Frequently Asked Questions</h2>
+        <div class="flex flex-col gap-8">
+
+          <div class="flex flex-col gap-8">
+            <h3>What is an AllSides Roundtable?</h3>
+            <div class="faq-a">
+              <p class="body">AllSides Roundtables are live online conversations where you'll join a small group of 4–6 people to discuss an important issue.<br><br>Better than a Zoom call but without any special software, you will meet with people from different perspectives and follow an integrated conversation guide to help everyone listen and be heard. Afterwards, you will get a report not only about what your group discussed, but also what the other groups discussed and discovered together — a report you can share with friends and policy makers.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8">
+            <h3>How long does it take?</h3>
+            <div class="faq-a">
+              <p class="body">Plan for about 60–90 minutes total:<br>
+              5–10 minutes: Welcome and instructions<br>
+              45–75 minutes: Small group discussion<br>
+              5 minutes: Quick closing survey</p>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-8">
+            <h3>Do I need any special equipment or software?</h3>
+            <div class="faq-a">
+              <p class="body">Just a computer, tablet, or smartphone with an internet connection, a camera, a microphone and speakers (or headphones), and an updated web browser (Chrome, Firefox, or Edge).<br><br>No downloads or special software required. You'll join through a simple web link.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dialogue & Deliberation -->
+  <section class="py-16 flex flex-col items-center gap-8 text-center">
+    <a href="https://allsides.com" aria-label="AllSides">
+      <svg role="img" aria-label="AllSides" style="height:36px;width:auto;display:block;" viewBox="0 0 449 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#lc2)">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M146.533 89.0381L142.254 74.7301H114.603L110.329 89.0381H95.5149L120.453 15.8311H136.098L161.24 89.0381H146.533ZM128.479 29.0001L118.26 62.6961H138.602L128.479 29.0001Z" fill="#353C40"/>
+          <path d="M164.581 89.0378V15.8318H177.31V89.0388L164.581 89.0378ZM186.178 89.0378V15.8318H198.907V89.0388L186.178 89.0378ZM259.737 83.3358C250.868 90.8018 238.976 90.9028 235.635 90.9028C231.249 90.9028 217.169 90.6958 206.944 80.0158C205.689 78.6678 204.333 76.9038 203.395 75.2458L214.976 67.2628C218.209 72.0328 224.257 78.2518 237.823 78.2518C238.45 78.2518 241.056 78.2518 243.244 77.7348C244.815 77.4248 252.01 75.4588 252.01 68.6108C252.01 67.8868 251.909 65.9148 250.659 64.2568C248.15 60.9368 241.48 59.9988 237.823 59.1728L229.067 57.2018C225.303 56.3758 221.239 55.5438 217.898 53.7798C214.456 52.0158 207.357 47.3478 207.357 36.7748C207.357 35.1168 207.566 30.3478 210.183 25.9878C213.512 20.3928 221.544 13.9658 236.472 13.9658C243.04 13.9658 255.978 14.9998 266.203 28.7918L254.831 37.1848C252.536 33.5608 247.319 26.3028 235.737 26.3028C235.008 26.3028 225.721 26.1958 222.697 31.8988C222.07 33.0438 221.866 34.0788 221.866 35.2188C221.866 36.4598 222.177 37.5048 222.799 38.5388C224.574 41.5438 228.643 42.4768 235.426 43.9318L243.04 45.5888C250.032 47.1448 257.758 49.2188 262.654 54.9208C264.745 57.2008 266.932 60.5158 266.932 67.2628C266.932 73.8978 264.847 78.9818 259.737 83.3358ZM272.882 29.0998V15.8268H285.295V29.0998H272.882ZM272.882 89.0378V37.1848H285.295V89.0378H272.882Z" fill="#353C40"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M329.121 89.0381V84.0561C328.596 84.5781 328.183 85.2011 327.663 85.7181C325.679 87.5881 321.395 90.5951 314.617 90.5951C312.848 90.5951 309.084 90.3871 304.912 88.4151C299.277 85.8251 291.454 79.0781 291.454 64.1511C291.454 48.2861 300.113 40.0951 306.06 37.3991C307.727 36.6741 310.757 35.6351 315.137 35.6351C316.912 35.6351 320.671 35.7351 324.633 37.9151C325.362 38.3311 325.99 38.6451 327.239 39.5781C328.183 40.3031 328.912 41.2361 329.121 41.4431V15.8311H341.534V89.0381H329.121ZM326.719 52.6401C326.092 51.5001 324.944 50.1511 324.006 49.4271C321.926 47.7691 319.62 47.1461 317.014 47.1461C315.974 47.1461 313.261 47.3481 310.655 49.0111C304.703 52.8481 304.494 61.2471 304.494 62.8031C304.494 70.4771 307.727 79.2911 316.912 79.2911C320.253 79.2911 322.858 78.2521 325.046 75.7691C328.279 72.2411 329.121 67.9891 329.014 63.3191C329.014 59.9991 328.494 55.7521 326.719 52.6401ZM395.06 82.8131C392.138 85.5101 385.146 90.5941 374.396 90.5941C371.061 90.5941 362.814 90.1781 355.726 83.6501C349.779 78.0441 347.586 70.8871 347.586 62.8021C347.586 58.4481 348.214 54.3021 349.881 50.3591C352.176 45.1731 358.648 35.6341 373.774 35.6341C385.457 35.6341 391.618 41.6451 394.331 45.5891C396.722 49.2191 399.125 55.5441 399.436 65.6051H360.836C361.045 67.1561 361.565 70.3701 364.181 73.4871C365.945 75.6621 369.082 78.4601 375.548 78.4601C382.02 78.4601 385.774 75.4601 387.441 73.6851C387.859 73.2791 388.487 72.4481 389.216 71.3081L399.859 77.4261C399.023 78.5611 397.564 80.5321 395.06 82.8131ZM384.626 52.2231C383.473 49.7351 380.76 45.5891 373.983 45.5891C371.27 45.5891 369.806 46.1061 368.766 46.5221C362.927 48.9091 361.565 54.7121 361.254 56.4771H385.666C385.463 54.8191 385.114 53.4011 384.626 52.2231Z" fill="#353C40"/>
+          <path d="M447.225 79.9138C444.721 84.6838 438.255 90.5938 425.52 90.5938C415.719 90.5938 408.727 87.2738 405.494 85.3018C403.719 84.1668 402.051 82.8128 400.48 81.2568L409.869 73.6838C410.287 74.2118 410.915 75.1388 412.271 76.2848C416.759 80.1168 423.44 80.3248 424.898 80.3248C428.024 80.3248 431.681 79.5998 433.761 77.2178C434.603 76.3858 435.118 75.2458 435.118 74.2118C435.118 73.7918 435.016 72.9698 434.287 72.0318C432.93 70.1618 431.263 70.0608 427.402 69.2288C423.96 68.5038 420.512 68.0888 417.183 67.2628C414.882 66.6388 402.781 63.7348 402.781 52.5378C402.781 48.5948 404.448 45.6958 405.177 44.5498C407.789 40.5098 413.944 35.6338 425.209 35.6338C429.274 35.6338 439.82 36.2568 447.643 45.2798L438.775 53.4698C437.729 51.2908 436.378 50.0438 435.542 49.3198C432.303 46.5218 428.866 45.5888 424.587 45.5888C424.067 45.5888 420.512 45.5888 418.223 47.1448C416.341 48.3918 415.928 50.0448 415.928 50.9768C416.024 52.7408 417.279 53.9868 417.595 54.1958C418.952 55.2348 422.4 56.0608 426.566 56.7858C429.386 57.3078 432.201 57.7178 435.016 58.3418C437.836 58.9648 440.962 59.8978 443.268 61.5608C445.139 62.9088 449 66.5328 449 72.8588C449 75.3528 448.373 77.7348 447.225 79.9138Z" fill="#353C40"/>
+          <path d="M40.2389 42.4981L18.1319 17.6801C15.5259 14.7601 12.3729 15.3781 11.1239 19.0601L0.51289 50.3161C-0.73711 53.9931 0.378891 59.4021 2.97889 62.3281L8.05689 68.0301L18.6469 96.8081C19.4189 98.9021 20.2339 98.7961 20.4639 96.5891L21.8369 83.4951L25.0809 87.1451C27.6909 90.0661 30.8449 89.4431 32.0889 85.7651L42.6939 54.5101C43.9489 50.8281 42.8449 45.4181 40.2389 42.4981Z" fill="#DD2A19"/>
+          <path d="M90.2886 41.6447L57.7906 48.3277C53.9676 49.1107 49.8066 52.7717 48.5576 56.4547L37.9516 87.7047C36.6966 91.3927 38.8146 93.7587 42.6376 92.9747L54.8036 90.4647L73.2806 103.208C74.3476 103.943 75.1736 103.49 75.1146 102.201L74.3696 86.4467L75.1356 86.2927C78.9646 85.4987 83.1196 81.8477 84.3746 78.1597L94.9806 46.9147C96.2296 43.2277 94.1226 40.8557 90.2886 41.6447Z" fill="#2062A6"/>
+          <path d="M91.2834 28.8871L86.4044 23.4141L88.0884 5.9181C88.2164 4.6281 87.3374 3.9891 86.1414 4.5011L74.0934 9.5951L69.1764 4.0751C66.5664 1.1481 61.3004 -0.599902 57.4714 0.188098L24.9734 6.8671C21.1504 7.6561 20.1434 10.6871 22.7534 13.6191L44.8554 38.4321C47.4554 41.3521 52.7324 43.1051 56.5554 42.3171L89.0474 35.6341C92.8814 34.8501 93.8784 31.8131 91.2834 28.8871Z" fill="#8C63A6"/>
+        </g>
+        <defs><clipPath id="lc2"><rect width="449" height="104" fill="white"/></clipPath></defs>
+      </svg>
+    </a>
+    <h2>Dialogue &amp; Deliberation</h2>
+    <p class="body max-w-[800px]">AllSides helps people build mutual understanding by connecting them to a range of dialogue services.</p>
+    <a href="https://roundtables.allsides.com" class="btn-dark lg">Learn more</a>
+  </section>
+
+</main>
+
+<!-- ── FOOTER ── -->
+<footer class="py-6 pb-[140px]">
+  <div class="max-w-[940px] mx-auto px-8">
+
+    <div class="footer-links flex flex-wrap justify-center mb-5">
+      <a href="#">About AllSides</a>
+      <a href="#">Press</a>
+      <a href="#">Ownership</a>
+      <a href="#">Terms of Use</a>
+      <a href="#">Privacy Notice</a>
+      <a href="#">Cookie Policy</a>
+      <a href="#">Support AllSides</a>
+      <a href="#">Contact</a>
+    </div>
+
+    <div class="footer-row flex justify-between items-end flex-wrap gap-4 mb-5">
+      <div class="flex gap-[9px] items-center">
+        <span class="block bg-[#757575]" style="width:10px;height:18px;"></span>
+        <span class="block bg-[#757575]" style="width:16px;height:13px;"></span>
+        <span class="block bg-[#757575] rounded-sm" style="width:16px;height:16px;"></span>
+        <span class="block bg-[#757575]" style="width:16px;height:18px;"></span>
+        <span class="block bg-[#757575] rounded-sm" style="width:16px;height:16px;"></span>
+      </div>
+      <div class="app-badges flex gap-3 pt-5">
+        <div class="app-badge">App Store</div>
+        <div class="app-badge">Google Play</div>
+      </div>
+      <div class="copyright">© 2026 AllSides</div>
+    </div>
+
+    <button class="cookie-btn">Manage Preferences</button>
+
+  </div>
+</footer>
+
+</body>
+</html>
