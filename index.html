@@ -65,7 +65,7 @@
     .btn-dark.lg { font-size: 1.5rem; padding: 28px 56px; }
     .btn-short { display: none; }
 
-    /* ── HERO BACKGROUND (swap video src when needed) ── */
+    /* ── HERO BACKGROUND ── */
     #hero-bg {
       position: sticky;
       top: 0;
@@ -74,6 +74,7 @@
       height: 100vh;
       overflow: hidden;
       z-index: 0;
+      background: url('images/hero-bg.jpg') center / cover no-repeat;
     }
     #hero-bg iframe {
       position: absolute;
@@ -85,6 +86,11 @@
       min-height: 100%;
       border: none;
       pointer-events: none;
+    }
+
+    @media (max-width: 960px) {
+      #hero-bg iframe,
+      #hero-bg > div { display: none; }
     }
 
     /* ── HERO SECTION (sticky scroll mechanics) ── */
