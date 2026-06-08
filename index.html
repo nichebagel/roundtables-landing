@@ -92,7 +92,7 @@
 
     /* ── HERO SECTION (sticky scroll mechanics) ── */
     .hero-section {
-      height: 74vh;
+      height: 85vh;
       margin-top: -100vh;
       padding: 32px 0 0;
       display: flex;
@@ -123,8 +123,32 @@
     .nav-wordmark { color: var(--as-dark); font-weight: 300; }
 
     /* ── HERO HEADLINE ── */
-    .hero-headline { flex: 1; display: flex; align-items: center; padding-top: 32px; }
-    .hero-headline .frosted { max-width: 840px; display: flex; flex-direction: column; gap: 49px; }
+    .hero-headline { flex: 1; display: flex; align-items: center; justify-content: center; }
+
+    /* ── HERO CARD ── */
+    .hero-card {
+      position: relative;
+      isolation: isolate;
+      max-width: 840px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      padding: 64px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 32px;
+      background: rgba(0, 0, 0, 0.20);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      filter: blur(100px);
+      z-index: -1;
+    }
 
     /* ── TYPOGRAPHY ── */
     h1 { font-size: clamp(2rem, 4.5vw, 3.5rem); font-weight: 500; line-height: 1.15; }
@@ -291,7 +315,7 @@
     </nav>
 
     <div class="hero-headline">
-      <div class="frosted">
+      <div class="hero-card">
         <h1>How are you pursuing <em>your</em> American Dream?</h1>
         <p class="body">Maybe it's buying a home. Maybe it's starting a business. Maybe it's helping your children have more opportunities than you did.</p>
       </div>
@@ -328,17 +352,17 @@
       <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
         <img src="images/activity-share.jpg" alt="Share" class="w-full aspect-square rounded-lg object-cover" />
         <h3>Share</h3>
-        <p class="body">You'll have the chance to share your own experiences about building your dream</p>
+        <p class="body">You'll have the chance to share your own experiences about building your dream.</p>
       </div>
       <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
         <img src="images/activity-listen.jpg" alt="Listen" class="w-full aspect-square rounded-lg object-cover" />
         <h3>Listen</h3>
-        <p class="body">Hear how others are navigating similar questions about work, family, money, and what success really looks like</p>
+        <p class="body">Hear how others are navigating similar questions about work, family, money, and what success really looks like.</p>
       </div>
       <div class="p-8 rounded-[32px] outline outline-1 outline-[#d4d4d4] -outline-offset-1 flex flex-col gap-4 bg-white">
         <img src="images/activity-connect.jpg" alt="Connect" class="w-full aspect-square rounded-lg object-cover" />
         <h3>Connect</h3>
-        <p class="body">You might discover that someone else's path gives you a new perspective on your own</p>
+        <p class="body">You might discover that someone else's path gives you a new perspective on your own.</p>
       </div>
     </div>
   </section>
