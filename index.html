@@ -74,6 +74,7 @@
       height: 100vh;
       overflow: hidden;
       z-index: 0;
+      background: url('images/hero-bg.jpg') center / cover no-repeat;
     }
     #hero-bg iframe {
       position: absolute;
@@ -85,6 +86,8 @@
       min-height: 100%;
       border: none;
       pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
     }
 
     /* ── HERO SECTION (sticky scroll mechanics) ── */
@@ -455,5 +458,12 @@
   </div>
 </footer>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script>
+  var vimeoPlayer = new Vimeo.Player(document.querySelector('#hero-bg iframe'));
+  vimeoPlayer.on('play', function() {
+    document.querySelector('#hero-bg iframe').style.opacity = '1';
+  });
+</script>
 </body>
 </html>
