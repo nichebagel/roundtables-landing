@@ -74,7 +74,6 @@
       height: 100vh;
       overflow: hidden;
       z-index: 0;
-      background: url('images/hero-bg.jpg') center / cover no-repeat;
     }
     #hero-bg iframe {
       position: absolute;
@@ -86,11 +85,6 @@
       min-height: 100%;
       border: none;
       pointer-events: none;
-    }
-
-    @media (max-width: 960px) {
-      #hero-bg iframe,
-      #hero-bg > div { display: none; }
     }
 
     /* ── HERO SECTION (sticky scroll mechanics) ── */
@@ -261,11 +255,10 @@
 <!-- ── HERO BACKGROUND ── -->
 <div id="hero-bg">
   <iframe
-    src="https://www.youtube.com/embed/m03xZ3UtXgQ?autoplay=1&mute=1&loop=1&controls=0&rel=0&playsinline=1&playlist=m03xZ3UtXgQ&modestbranding=1&showinfo=0"
-    allow="autoplay; encrypted-media"
+    src="https://player.vimeo.com/video/1199463533?background=1&autoplay=1&loop=1&muted=1"
+    allow="autoplay; fullscreen"
     allowfullscreen>
   </iframe>
-  <div style="position:absolute;inset:0;z-index:1;"></div>
 </div>
 
 <!-- ── HERO ── -->
